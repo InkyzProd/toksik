@@ -3,9 +3,6 @@
   "version": "1.0.0",
   "description": "A simple and flexible package for filtering messages containing bad words.",
   "main": "src/toxic.js",
-  "scripts": {
-    "start": "node toxic.js"
-  },
   "repository": "https://github.com/InkyzProd/toksik",
   "keywords": [
     "badwords",
