@@ -2,7 +2,7 @@
   "name": "toksik.js",
   "version": "1.0.0",
   "description": "A simple and flexible package for filtering messages containing bad words.",
-  "main": "toxic.js",
+  "main": "main.js",
   "scripts": {
     "test": "node test.js"
   },
