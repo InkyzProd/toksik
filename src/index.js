@@ -2,7 +2,7 @@ const fs = require('fs');
 
 function loadToxic() {
   try {
-    const wordsJson = fs.readFileSync('./words.json', 'utf8');
+    const wordsJson = fs.readFileSync('words.json', 'utf8');
     return JSON.parse(wordsJson).words;
   } catch (error) {
     console.error('Error loading words:', error);
