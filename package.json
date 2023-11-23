@@ -1,0 +1,21 @@
+{
+  "name": "toksik",
+  "version": "1.0.0",
+  "description": "A simple and flexible package for filtering messages containing bad words.",
+  "main": "src/toxic.js",
+  "scripts": {
+    "start": "node toxic.js"
+  },
+  "repository": "https://github.com/InkyzProd/toksik",
+  "keywords": [
+    "badwords",
+    "toxic",
+    "toksik"
+  ],
+  "author": "Inkyz",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/InkyzProd/toksik.js/issues"
+  },
+  "homepage": "https://github.com/InkyzProd/toksik.js#readme"
+}
