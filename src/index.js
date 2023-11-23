@@ -1,8 +1,10 @@
 const fs = require('fs');
+const path = require('path');
 
 function loadToxic() {
   try {
-    const wordsJson = fs.readFileSync('words.json', 'utf8');
+    const wordPath = path.join(__dirname, 'words.json');
+    const wordsJson = fs.readFileSync(wordPath, 'utf8');
     return JSON.parse(wordsJson).words;
   } catch (error) {
     console.error('Error loading words:', error);
