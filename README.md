@@ -20,7 +20,7 @@ console.log(word.isToxic('muka mu seperti bidadari')); // return false
 
 console.log(word.censor('muka mu seperti lonte')); // muka mu seperti *****
 console.log(word.censor('muka mu seperti bidadari')); // muka mu seperti bidadari
-// You can also change custom characters
+// You can also use custom characters
 console.log(word.censor('muka mu seperti lonte', '•')) // muka mu seperti •••••
 
 console.log(word.filter('muka mu seperti lonte')); // muka mu seperti
@@ -43,6 +43,6 @@ console.log(word.analyze('muka mu seperti bidadari')); // { isToxic: false, toxi
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
 
 ## contribution
-you can contribute badwords for [words.json](https://github.com/InkyzProd/toksik/blob/0c7da8eafbacc5aa39cc6c940a7f5f6d99b3b794/src/words.json) thank you!
+you can contribute badwords for [words.json](./src/words.json) thank you!
 
 ## Thank you for using this package!
