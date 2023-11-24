@@ -4,7 +4,7 @@
 ![npm bundle size (version)](https://img.shields.io/bundlephobia/min/toksik/2.0.0?style=plastic)
 ![GitHub top language](https://img.shields.io/github/languages/top/InkyzProd/toksik?style=plastic)
 
-Toksik is a simple and flexible package for filtering messages containing bad words.
+[Toksik](https://www.npmjs.com/package/toksik?activeTab=readme) is a simple and flexible package for filtering messages containing bad words.
 ## installation
 ```sh
 npm install toksik
