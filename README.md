@@ -31,10 +31,13 @@ console.log(word.analyze('muka mu seperti bidadari')); // { isToxic: false, toxi
 ```
 
 ## functions
-• `isToxic` = Returns true if the text contains an abusive word, and returns false if the text does not contain an abusive word.
-• `censor` = Replace badwords to `*`
-• `filter` = Delete text that contains badwords
-• `analyze` = Provides a list of all bad words if the text contains dirty words
+> `isToxic` = Returns true if the text contains an abusive word, and returns false if the text does not contain an abusive word.
+>
+> `censor` = Replace badwords to `*`
+> 
+> `filter` = Delete text that contains badwords
+> 
+> `analyze` = Provides a list of all bad words if the text contains dirty words
 
 ## license
 [![MIT License](https://img.shields.io/badge/License-MIT-green.svg)](https://choosealicense.com/licenses/mit/)
