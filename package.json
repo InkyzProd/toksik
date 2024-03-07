@@ -17,5 +17,8 @@
   "bugs": {
     "url": "https://github.com/InkyzProd/toksik.js/issues"
   },
-  "homepage": "https://github.com/InkyzProd/toksik.js#readme"
+  "homepage": "https://github.com/InkyzProd/toksik.js#readme",
+  "publishConfig": {
+  "@inkyz:registry": "https://npm.pkg.github.com"
+  }
 }
