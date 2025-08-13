@@ -1,6 +1,10 @@
 const fs = require('fs');
 const path = require('path');
 
+function escapeRegex(input) {
+  return input.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+}
+
 class Words {
   constructor(filePath = 'words.json') {
     try {
@@ -12,10 +16,19 @@ class Words {
   }
 
   loadToxic(filePath) {
-    const fullPath = path.join(__dirname, filePath);
+    const fullPath = path.isAbsolute(filePath)
+      ? filePath
+      : path.join(__dirname, filePath);
     try {
       const wordsJson = fs.readFileSync(fullPath, 'utf8');
-      return JSON.parse(wordsJson).words;
+      const parsed = JSON.parse(wordsJson);
+      const list = Array.isArray(parsed.words) ? parsed.words : [];
+      const normalized = list
+        .filter((item) => typeof item === 'string')
+        .map((item) => item.trim())
+        .filter((item) => item.length > 0);
+      const uniqueLower = Array.from(new Set(normalized.map((w) => w.toLowerCase())));
+      return uniqueLower;
     } catch (error) {
       const errorMessage = `Error loading words\nReason: ${error.message}`;
       console.error(errorMessage);
@@ -39,7 +52,11 @@ class Words {
   isToxic(text) {
     try {
       this.validateFunction('isToxic');
-      const regex = new RegExp('\\b(' + this.words.join('|') + ')\\b', 'i');
+      if (!Array.isArray(this.words) || this.words.length === 0) {
+        return false;
+      }
+      const escaped = this.words.map(escapeRegex);
+      const regex = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'i');
       return regex.test(text);
     } catch (error) {
       const errorMessage = `Error checking words\nReason: ${error.message}`;
@@ -51,16 +68,12 @@ class Words {
   censor(text, censorChar = '*') {
     try {
       this.validateFunction('censor');
-      const foundWordsMap = this.findMatchingWords(text);
-
-      foundWordsMap.forEach((matches, word) => {
-        matches.forEach(match => {
-          const replacement  = censorChar.repeat(match.length);
-          text = text.replace(match, replacement);
-        });
-      });
-
-      return text;
+      if (!Array.isArray(this.words) || this.words.length === 0) {
+        return text;
+      }
+      const escaped = this.words.map(escapeRegex);
+      const regex = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'gi');
+      return text.replace(regex, (match) => censorChar.repeat(match.length));
     } catch (error) {
       const errorMessage = `Error censoring text\nReason: ${error.message}`;
       console.error(errorMessage);
@@ -71,11 +84,16 @@ class Words {
   filter(text) {
     try {
       this.validateFunction('filter');
-      this.words.forEach(word => {
-        const reg = new RegExp('\\b' + word + '\\b', 'gi');
-        text = text.replace(reg, '');
-      });
-      return text.trim();
+      if (!Array.isArray(this.words) || this.words.length === 0) {
+        return text.trim();
+      }
+      const escaped = this.words.map(escapeRegex);
+      const regex = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'gi');
+      const cleaned = text
+        .replace(regex, '')
+        .replace(/\s{2,}/g, ' ')
+        .replace(/\s+([.,!?;:])/g, '$1');
+      return cleaned.trim();
     } catch (error) {
       const errorMessage = `Error filtering text\nReason: ${error.message}`;
       console.error(errorMessage);
@@ -86,10 +104,19 @@ class Words {
   analyze(text) {
     try {
       this.validateFunction('analyze');
-      const foundWords = this.words.filter(word => text.includes(word));
+      if (!Array.isArray(this.words) || this.words.length === 0) {
+        return {
+          isToxic: false,
+          toxicList: [],
+        };
+      }
+      const escaped = this.words.map(escapeRegex);
+      const regex = new RegExp('\\b(' + escaped.join('|') + ')\\b', 'gi');
+      const matches = text.match(regex) || [];
+      const unique = Array.from(new Set(matches.map(m => m.toLowerCase())));
       return {
-        isToxic: foundWords.length > 0,
-        toxicList: foundWords,
+        isToxic: unique.length > 0,
+        toxicList: unique,
       };
     } catch (error) {
       const errorMessage = `Error analyzing text\nReason: ${error.message}`;
@@ -107,7 +134,7 @@ class Words {
       const foundWordsMap = new Map();
 
       this.words.forEach(word => {
-        const regex = new RegExp('\\b' + word + '\\b', 'gi');
+        const regex = new RegExp('\\b' + escapeRegex(word) + '\\b', 'gi');
         const matches = message.match(regex);
         if (matches) {
           foundWordsMap.set(word, matches);

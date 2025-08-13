@@ -4,7 +4,7 @@
   "description": "A simple and flexible package for filtering messages containing bad words.",
   "main": "src/index.js",
   "scripts": {
-    "start": "node index.js"
+    "start": "node -e \"const Words=require('./src/index.js'); const w=new Words(); console.log({ isToxic:w.isToxic('muka mu seperti lonte'), censor:w.censor('muka mu seperti lonte'), filter:w.filter('muka mu seperti lonte'), analyze:w.analyze('muka mu seperti lonte') });\""
   },
   "repository": "https://github.com/InkyzProd/toksik",
   "keywords": [
@@ -15,10 +15,7 @@
   "author": "Inkyz",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/InkyzProd/toksik.js/issues"
+    "url": "https://github.com/InkyzProd/toksik/issues"
   },
-  "homepage": "https://github.com/InkyzProd/toksik.js#readme",
-  "publishConfig": {
-  "@inkyz:registry": "https://npm.pkg.github.com"
-  }
+  "homepage": "https://github.com/InkyzProd/toksik#readme"
 }
